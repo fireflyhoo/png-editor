@@ -1,0 +1,12 @@
+# 项目数据 / 个人记忆（含工作日志与偏好，不入库）
+.workbuddy/
+
+# 示例图（含用户私人截图，非运行必需）
+samples/
+
+# 系统 / 临时文件
+.DS_Store
+Thumbs.db
+*.log
+_*.png
+_*.html

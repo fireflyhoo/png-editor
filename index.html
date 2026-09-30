@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PNG / JPEG 区域删除工具 · 阿镜</title>
+  <base id="appBase" href="./" />
+  <script>
+    // 部署到子路径（如 example.com/png-editor/）时，以当前页面所在目录为基准，
+    // 保证 style.css / app.js / ?img= 的相对路径都能正确解析（含无尾部斜杠的情况）。
+    (function () {
+      var b = document.getElementById('appBase');
+      var p = location.pathname;
+      if (!p.endsWith('/')) {
+        if (p.indexOf('.') === -1) p += '/';              // 无扩展名 → 视作目录
+        else p = p.substring(0, p.lastIndexOf('/') + 1);  // 文件 → 取所在目录
+      }
+      b.href = p;
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 顶部工具栏 -->
+  <header class="toolbar">
+    <div class="brand">
+      <span class="logo">📷</span>
+      <span class="title">区域删除 · <em>Erase</em></span>
+    </div>
+
+    <div class="tool-group">
+      <label class="btn file-btn" title="打开 PNG / JPEG">
+        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" hidden />
+        <span>打开图片</span>
+      </label>
+      <button class="btn ghost" id="btnClear" title="清空当前图片">清空</button>
+    </div>
+
+    <div class="tool-group" role="group" aria-label="选区工具">
+      <button class="btn tool active" data-tool="rect" title="矩形选区">▭ 矩形</button>
+      <button class="btn tool" data-tool="ellipse" title="椭圆选区">◯ 椭圆</button>
+      <button class="btn tool" data-tool="lasso" title="套索选区">✎ 套索</button>
+    </div>
+
+    <div class="tool-group" role="group" aria-label="删除模式">
+      <span class="group-label">删除模式</span>
+      <button class="btn mode active" data-mode="transparent" title="清除为透明（PNG 友好）">透明</button>
+      <button class="btn mode" data-mode="color" title="填充纯色">纯色</button>
+      <button class="btn mode" data-mode="inpaint" title="内容感知修复（从周围采样）">修复</button>
+      <input type="color" id="fillColor" value="#ffffff" title="填充色" />
+    </div>
+
+    <div class="tool-group">
+      <button class="btn danger" id="btnDelete" title="删除选中区域（Delete）">删除选中</button>
+      <button class="btn ghost" id="btnClearSel" title="取消选区">取消选区</button>
+    </div>
+
+    <div class="tool-group" role="group" aria-label="裁剪">
+      <button class="btn" id="btnCrop" title="裁剪：进入后选区外变暗，应用则保留选区、裁掉其余">✂ 裁剪</button>
+      <button class="btn primary" id="btnApplyCrop" title="按当前选区裁剪（矩形硬裁；椭圆/套索保留形状，外透明）" disabled>应用裁剪</button>
+    </div>
+
+    <div class="tool-group undo">
+      <button class="btn ghost" id="btnUndo" title="撤销 (Ctrl+Z)" disabled>↶ 撤销</button>
+      <button class="btn ghost" id="btnRedo" title="重做 (Ctrl+Y)" disabled>↷ 重做</button>
+    </div>
+
+    <div class="tool-group">
+      <button class="btn ghost" id="btnZoomOut" title="缩小">－</button>
+      <span class="zoom-label" id="zoomLabel">100%</span>
+      <button class="btn ghost" id="btnZoomIn" title="放大">＋</button>
+      <button class="btn ghost" id="btnFit" title="适应窗口">适应</button>
+    </div>
+
+    <div class="tool-group export">
+      <button class="btn primary" id="btnExportPng" title="导出 PNG（保留透明）">导出 PNG</button>
+      <button class="btn primary" id="btnExportJpg" title="导出 JPEG">导出 JPG</button>
+    </div>
+  </header>
+
+  <!-- 工作区 -->
+  <main class="stage" id="stage">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="mainCanvas"></canvas>
+      <canvas id="overlayCanvas"></canvas>
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🖼️</div>
+      <p>拖入或点击 <strong>打开图片</strong> 载入 PNG / JPEG</p>
+      <p class="hint">载入后：选区域 → 选删除模式 → 点「删除选中」</p>
+    </div>
+  </main>
+
+  <!-- 底部状态条 -->
+  <footer class="statusbar">
+    <span id="statusImg">未载入图片</span>
+    <span class="sep">·</span>
+    <span id="statusSel">无选区</span>
+    <span class="sep">·</span>
+    <span id="statusTip">提示：滚轮缩放，空白处拖拽平移</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
