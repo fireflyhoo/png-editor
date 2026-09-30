@@ -25,56 +25,80 @@
   <header class="toolbar">
     <div class="brand">
       <span class="logo">📷</span>
-      <span class="title">区域删除 · <em>Erase</em></span>
+      <span class="title" data-i18n="appTitle">区域删除工具</span>
     </div>
 
     <div class="tool-group">
-      <label class="btn file-btn" title="打开 PNG / JPEG">
+      <label class="btn file-btn" data-i18n-title="openTitle" title="打开 PNG / JPEG">
         <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg" hidden />
-        <span>打开图片</span>
+        <span class="ico">📂</span><span data-i18n="open">打开图片</span>
       </label>
-      <button class="btn ghost" id="btnClear" title="清空当前图片">清空</button>
+      <button class="btn ghost" id="btnClear" data-i18n="clear" data-i18n-title="clearTitle" title="清空当前图片">清空</button>
     </div>
 
     <div class="tool-group" role="group" aria-label="选区工具">
-      <button class="btn tool active" data-tool="rect" title="矩形选区">▭ 矩形</button>
-      <button class="btn tool" data-tool="ellipse" title="椭圆选区">◯ 椭圆</button>
-      <button class="btn tool" data-tool="lasso" title="套索选区">✎ 套索</button>
+      <button class="btn tool active" data-tool="rect" data-i18n-title="toolRectTitle" title="矩形选区">▭ <span data-i18n="toolRect">矩形</span></button>
+      <button class="btn tool" data-tool="ellipse" data-i18n-title="toolEllipseTitle" title="椭圆选区">◯ <span data-i18n="toolEllipse">椭圆</span></button>
+      <button class="btn tool" data-tool="lasso" data-i18n-title="toolLassoTitle" title="套索选区">✎ <span data-i18n="toolLasso">套索</span></button>
     </div>
 
     <div class="tool-group" role="group" aria-label="删除模式">
-      <span class="group-label">删除模式</span>
-      <button class="btn mode active" data-mode="transparent" title="清除为透明（PNG 友好）">透明</button>
-      <button class="btn mode" data-mode="color" title="填充纯色">纯色</button>
-      <button class="btn mode" data-mode="inpaint" title="内容感知修复（从周围采样）">修复</button>
-      <input type="color" id="fillColor" value="#ffffff" title="填充色" />
+      <span class="group-label" data-i18n="delMode">删除模式</span>
+      <button class="btn mode active" data-mode="transparent" data-i18n="modeTransparent" title="清除为透明（PNG 友好）">透明</button>
+      <button class="btn mode" data-mode="color" data-i18n="modeColor" title="填充纯色">纯色</button>
+      <button class="btn mode" data-mode="inpaint" data-i18n="modeInpaint" title="内容感知修复（从周围采样）">修复</button>
+      <span class="color-chip" title="填充色"><input type="color" id="fillColor" value="#ffffff" data-i18n-title="fillColorTitle" title="填充色" /></span>
     </div>
 
     <div class="tool-group">
-      <button class="btn danger" id="btnDelete" title="删除选中区域（Delete）">删除选中</button>
-      <button class="btn ghost" id="btnClearSel" title="取消选区">取消选区</button>
+      <button class="btn danger" id="btnDelete" data-i18n-title="deleteTitle" title="删除选中区域（Delete）">🗑 <span data-i18n="delete">删除选中</span></button>
+      <button class="btn ghost" id="btnClearSel" data-i18n="clearSel" data-i18n-title="clearSelTitle" title="取消选区">取消选区</button>
     </div>
 
     <div class="tool-group" role="group" aria-label="裁剪">
-      <button class="btn" id="btnCrop" title="裁剪：进入后选区外变暗，应用则保留选区、裁掉其余">✂ 裁剪</button>
-      <button class="btn primary" id="btnApplyCrop" title="按当前选区裁剪（矩形硬裁；椭圆/套索保留形状，外透明）" disabled>应用裁剪</button>
+      <button class="btn" id="btnCrop" data-i18n-title="cropTitle" title="裁剪：进入后选区外变暗，应用则保留选区、裁掉其余">✂ <span data-i18n="crop">裁剪</span></button>
+      <select id="cropRatioSel" class="select" data-i18n-title="cropRatioTitle" title="裁剪比例">
+        <option value="free" data-i18n="ratioFree">自由</option>
+        <option value="1:1" data-i18n="ratio11">1:1</option>
+        <option value="4:3" data-i18n="ratio43">4:3</option>
+        <option value="3:4" data-i18n="ratio34">3:4</option>
+        <option value="16:9" data-i18n="ratio169">16:9</option>
+        <option value="9:16" data-i18n="ratio916">9:16</option>
+      </select>
+      <button class="btn primary" id="btnApplyCrop" data-i18n="applyCrop" data-i18n-title="applyCropTitle" title="按当前选区裁剪" disabled>应用裁剪</button>
     </div>
 
     <div class="tool-group undo">
-      <button class="btn ghost" id="btnUndo" title="撤销 (Ctrl+Z)" disabled>↶ 撤销</button>
-      <button class="btn ghost" id="btnRedo" title="重做 (Ctrl+Y)" disabled>↷ 重做</button>
+      <button class="btn ghost icon" id="btnUndo" data-i18n-title="undoTitle" title="撤销 (Ctrl+Z)">↶ <span data-i18n="undo">撤销</span></button>
+      <button class="btn ghost icon" id="btnRedo" data-i18n-title="redoTitle" title="重做 (Ctrl+Y)">↷ <span data-i18n="redo">重做</span></button>
     </div>
 
     <div class="tool-group">
-      <button class="btn ghost" id="btnZoomOut" title="缩小">－</button>
+      <button class="btn ghost round" id="btnZoomOut" data-i18n-title="zoomOutTitle" title="缩小">－</button>
       <span class="zoom-label" id="zoomLabel">100%</span>
-      <button class="btn ghost" id="btnZoomIn" title="放大">＋</button>
-      <button class="btn ghost" id="btnFit" title="适应窗口">适应</button>
+      <button class="btn ghost round" id="btnZoomIn" data-i18n-title="zoomInTitle" title="放大">＋</button>
+      <button class="btn ghost" id="btnFit" data-i18n="fit" data-i18n-title="fitTitle" title="适应窗口">适应</button>
+    </div>
+
+    <div class="tool-group">
+      <button class="btn lang" id="btnLang" title="切换语言 / Switch language">中文</button>
     </div>
 
     <div class="tool-group export">
-      <button class="btn primary" id="btnExportPng" title="导出 PNG（保留透明）">导出 PNG</button>
-      <button class="btn primary" id="btnExportJpg" title="导出 JPEG">导出 JPG</button>
+      <select id="exportScaleSel" class="select" data-i18n-title="exportSizeTitle" title="导出尺寸">
+        <option value="1" data-i18n="size100">原图 100%</option>
+        <option value="0.75">75%</option>
+        <option value="0.5">50%</option>
+        <option value="0.25">25%</option>
+        <option value="2">200%</option>
+        <option value="custom" data-i18n="sizeCustom">自定义…</option>
+      </select>
+      <span class="custom-size" id="customSizeWrap" hidden>
+        <input type="number" id="exportW" class="num" min="1" value="0" /> <span class="x">×</span>
+        <input type="number" id="exportH" class="num" min="1" value="0" /> <span class="px">px</span>
+      </span>
+      <button class="btn primary" id="btnExportPng" data-i18n="exportPng" data-i18n-title="exportPngTitle" title="导出 PNG（保留透明）">导出 PNG</button>
+      <button class="btn primary alt" id="btnExportJpg" data-i18n="exportJpg" data-i18n-title="exportJpgTitle" title="导出 JPEG">导出 JPG</button>
     </div>
   </header>
 
@@ -88,8 +112,8 @@
     <!-- 空状态 -->
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">🖼️</div>
-      <p>拖入或点击 <strong>打开图片</strong> 载入 PNG / JPEG</p>
-      <p class="hint">载入后：选区域 → 选删除模式 → 点「删除选中」</p>
+      <p data-i18n="empty1">拖入或点击 <strong>打开图片</strong> 载入 PNG / JPEG</p>
+      <p class="hint" data-i18n="empty2">载入后：选区域 → 选删除模式 → 点「删除选中」</p>
     </div>
   </main>
 
